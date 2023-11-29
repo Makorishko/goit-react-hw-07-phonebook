@@ -5,12 +5,11 @@ import { Wrapper } from './wrapper-styled';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/operations';
-import { getContacts, getIsLoading, getError } from 'redux/selectors';
+import { getIsLoading, getError } from 'redux/selectors';
 
 export const App = () => {
   const dispatch = useDispatch();
 
-  const items = useSelector(getContacts);
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
 
@@ -23,7 +22,6 @@ export const App = () => {
       <div>
         {isLoading && <p>Loading tasks...</p>}
         {error && <p>{error}</p>}
-        {/* <p>{items.length > 0 && JSON.stringify(items, null, 2)}</p> */}
       </div>
       <h1>Phonebook</h1>
       <ContactForm />
