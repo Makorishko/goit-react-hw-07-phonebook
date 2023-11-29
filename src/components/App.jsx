@@ -1,16 +1,35 @@
+import { ContactForm } from './form/form';
+import { Filter } from './filter';
+import { ContactList } from './list/list';
+import { Wrapper } from './wrapper-styled';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
+import { getContacts, getIsLoading, getError } from 'redux/selectors';
+
 export const App = () => {
+  const dispatch = useDispatch();
+
+  const items = useSelector(getContacts);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <Wrapper>
+      <div>
+        {isLoading && <p>Loading tasks...</p>}
+        {error && <p>{error}</p>}
+        {/* <p>{items.length > 0 && JSON.stringify(items, null, 2)}</p> */}
+      </div>
+      <h1>Phonebook</h1>
+      <ContactForm />
+      <h2>Contacts</h2>
+      <Filter />
+      <ContactList />
+    </Wrapper>
   );
 };
